@@ -1,32 +1,51 @@
 import React from "react"
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
-import { Home, Reviews, Submit } from './pages'
+import { useState, useEffect } from "react";
+import { Routes, Route, Link } from 'react-router-dom';
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path="/" element={<Home />}/>
-        <Route path="/reviews" element={<Reviews />}/>
         <Route path="/submit" element={<Submit />}/>
       </Routes>
     </div>
   );
 }
 
-/*
-Get data from movies.json
+export function Home() {
 
-const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     fetch('./movies.json')
       .then((response) => response.json())
       .then(setMovies)
   }, []);
+   
+  return (
+      <div>
+          <nav>
+              Home <Link to="/Submit">Submit Review</Link>
+          </nav>
+          <h1>Home</h1>
+          { movies.map( movie => { return <Movie info={movie}></Movie>}) }
+      </div>
 
-Data from movies.json
+  )
+}
+
+export function Submit() {
+  return (
+  <div>
+      <nav>
+          <Link to="/">Home</Link> Submit
+      </nav>
+      <h1>Submit</h1>
+  </div>
+  )
+}
 
 function Movie(props) {
   console.log(props);
@@ -44,10 +63,8 @@ function Movie(props) {
   )
 }
 
-Actor data from movies.json
-
 function Actor(props) {
   return <li>{ props.actor }</li>
-} */
+}
 
 export default App;
