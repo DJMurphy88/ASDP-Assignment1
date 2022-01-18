@@ -18,30 +18,36 @@ export function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Reviews movies={movies} />}/>
+        <Route path="/" element={<Reviews movies={movies} onRemoveMovie={name => {
+          const newMovies = movies.filter(movie => movie.name !== name);
+          setMovies(newMovies);
+        }}/>}/>
         <Route path="/submit" element={<Submit />}/>
       </Routes>
     </div>
   );
 }
 
-export function Movie(props) {
+export function Movie({name, date, actors, poster, rating, onRemove = f => f}) {
   return (
     <>
-      <h2>{props.info.name}</h2>
-      <img src={props.info.poster} alt='Movie Poster'></img>
-      <p>Release Date: {props.info.date}</p>
-    <p>Actors:
+      <h2>{name}</h2>
+      <img src={poster} alt='Movie Poster'></img>
+      <p>Release Date: {date}</p>
+    <p>Actors:</p>
     <ul>
-      {props.info.actors.map((actor) => <Actor actor={actor} />)}
-    </ul></p>
-    <p>Rating: {props.info.rating}/5</p>
+      {actors.map((actor) => <Actor actor={actor} />)}
+    </ul>
+    <p>Rating: {rating}/5</p>
+    <button onClick={() => onRemove(name)}>
+    Remove
+    </button>
   </>
 )
 }
 
-function Actor(props) {
-  return <li>{ props.actor }</li>
+function Actor(actors) {
+  return <li>{ actors.actor }</li>
 }
 
 export default App;
