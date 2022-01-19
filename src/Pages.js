@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Movie } from "./App";
+import { Movie, AddMovie } from "./App";
 
 export function Reviews({movies = [], onRemoveMovie = f => f}) {
     if(!movies.length) return <div>No reviews listed.</div>;
@@ -15,13 +15,14 @@ export function Reviews({movies = [], onRemoveMovie = f => f}) {
     )
   }
   
-export function Submit() {
+export function Submit({movie =[], onNewMovie =f => f}) {
     return (
         <div>
             <nav>
                 <Link to="/">Home</Link> Submit Review
             </nav>
             <h1>Submit</h1>
+            <AddMovie onNewMovie={onNewMovie} />
         </div>
     )
 }

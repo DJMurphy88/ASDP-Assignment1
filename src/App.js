@@ -15,6 +15,8 @@ export function App() {
 
   if( movies == null) return null;
 
+  console.log(movies)
+
   return (
     <div className="App">
       <Routes>
@@ -22,17 +24,22 @@ export function App() {
           const newMovies = movies.filter(movie => movie.name !== name);
           setMovies(newMovies);
         }}/>}/>
-        <Route path="/submit" element={<Submit />}/>
+        <Route path="/submit" element={<Submit onNewMovie={(name, date, actors, poster, rating) => {
+          const newMovies = [...movies, {name, date, actors, poster, rating}];
+          setMovies(newMovies);
+        }} />}/>
       </Routes>
     </div>
   );
 }
 
 export function Movie({name, date, actors, poster, rating, onRemove = f => f}) {
+  const altText = `Movie poster for ${name}`
+  const posterURL = `./images/${poster}`
   return (
     <>
       <h2>{name}</h2>
-      <img src={poster} alt='Movie Poster'></img>
+      <img src={posterURL} alt={altText}></img>
       <p>Release Date: {date}</p>
     <p>Actors:</p>
     <ul>
@@ -49,5 +56,57 @@ export function Movie({name, date, actors, poster, rating, onRemove = f => f}) {
 function Actor(actors) {
   return <li>{ actors.actor }</li>
 }
+
+export function AddMovie({onNewMovie =f => f}) {
+  const [nameProps, resetName] = useInput("");
+  const [dateProps, resetDate] = useInput("");
+  const [actorsProps, resetActors] = useInput("");
+  const [posterProps, resetPoster] = useInput("");
+  const [ratingProps, resetRating] = useInput("");
+
+  const submit = event => {
+    event.preventDefault();
+    const actorsArray = actorsProps.value.split(",").map(actor=>actor.trim());
+    const fileName =  posterProps;
+    console.log(posterProps)
+    onNewMovie(nameProps.value, dateProps.value, actorsArray, fileName, ratingProps.value);
+    resetName();
+    resetDate();
+    resetActors();
+    resetPoster();
+    resetRating();
+  }
+
+  return (
+    <form onSubmit={submit}>
+                <div>
+                <input {...nameProps} type="text" placeholder="Name" required />
+                </div>
+                <div>
+                <input {...dateProps} type="text" placeholder="Release date" required />
+                </div>
+                <div>
+                <input {...actorsProps} type="text" placeholder="Actors, separated by a comma" required />
+                </div>
+                <div>
+                <input {...posterProps} type="file" placeholder="Poster" />
+                </div>
+                <div>
+                <input {...ratingProps} type="number" placeholder="Rating out of 5" min="1" max="5" required />
+                </div>
+                <div>
+                    <button>Add</button>
+                </div>
+            </form>
+  )
+}
+
+const useInput = initialValue => {
+  const [value, setValue] = useState(initialValue);
+  return [
+    { value, onChange: e => setValue(e.target.value) },
+    () => setValue(initialValue)
+  ];
+};
 
 export default App;
