@@ -15,14 +15,13 @@ export function App() {
 
   if( movies == null) return null;
 
-  console.log(movies)
-
   return (
     <div className="App">
       <Routes>
         <Route path="/" element={<Reviews movies={movies} onRemoveMovie={name => {
           const newMovies = movies.filter(movie => movie.name !== name);
           setMovies(newMovies);
+          console.log(movies)
         }}/>}/>
         <Route path="/submit" element={<Submit onNewMovie={(name, date, actors, poster, rating) => {
           const newMovies = [...movies, {name, date, actors, poster, rating}];
@@ -66,9 +65,8 @@ export function AddMovie({onNewMovie =f => f}) {
 
   const submit = event => {
     event.preventDefault();
+    const fileName = posterProps.value.replace("C:\\fakepath\\", "")
     const actorsArray = actorsProps.value.split(",").map(actor=>actor.trim());
-    const fileName =  posterProps;
-    console.log(posterProps)
     onNewMovie(nameProps.value, dateProps.value, actorsArray, fileName, ratingProps.value);
     resetName();
     resetDate();

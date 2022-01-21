@@ -10,7 +10,7 @@ export function Reviews({movies = [], onRemoveMovie = f => f}) {
                 Reviews <Link to="/Submit">Submit Review</Link>
             </nav>
             <h1>Reviews</h1>
-            { movies.map(movie => <Movie key={movie.name} {...movie} onRemove={onRemoveMovie} />) }
+            { movies.map(movie => <Movie {...movie} onRemove={onRemoveMovie} />) }
         </div>
     )
   }
@@ -26,4 +26,3 @@ export function Submit({movie =[], onNewMovie =f => f}) {
         </div>
     )
 }
-
