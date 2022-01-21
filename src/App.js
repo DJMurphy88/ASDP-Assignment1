@@ -78,19 +78,19 @@ export function AddMovie({onNewMovie =f => f}) {
   return (
     <form onSubmit={submit}>
                 <div>
-                <input {...nameProps} type="text" placeholder="Name" required />
+                <input {...nameProps} type="text" size="30" placeholder="Name" required />
                 </div>
                 <div>
-                <input {...dateProps} type="text" placeholder="Release date" required />
+                <input {...dateProps} type="text" size="30" placeholder="Release date" required />
                 </div>
                 <div>
-                <input {...actorsProps} type="text" placeholder="Actors, separated by a comma" required />
+                <input {...actorsProps} type="text" size="30" placeholder="Actors, separated by a comma" required />
                 </div>
                 <div>
                 <input {...posterProps} type="file" placeholder="Poster" />
                 </div>
                 <div>
-                <input {...ratingProps} type="number" placeholder="Rating out of 5" min="1" max="5" required />
+                <input {...ratingProps} type="number"size="30" placeholder="Rating out of 5" min="1" max="5" required />
                 </div>
                 <div>
                     <button>Add</button>
